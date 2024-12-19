@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor Foto Profesional</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js" defer></script>
+</head>
+<body class="bg-gradient-to-br from-gray-100 to-gray-200 text-gray-900 font-inter min-h-screen flex flex-col">
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-blue-500 to-indigo-500 text-white p-4 shadow-lg">
+    <div class="container mx-auto flex justify-between items-center">
+      <div class="flex items-center">
+        <i class="fas fa-camera-retro text-3xl mr-3"></i>
+        <span class="text-xl font-bold">Editor Foto Syahid</span>
+      </div>
+      <div class="md:hidden">
+        <button id="menu-button" class="text-white focus:outline-none">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </div>
+      <ul id="menu" class="hidden md:flex space-x-6">
+        <li><a href="#" class="hover:text-blue-200"><i class="fas fa-home mr-2"></i>Beranda</a></li>
+        <li><a href="#" class="hover:text-blue-200"><i class="fas fa-info-circle mr-2"></i>Tentang</a></li>
+        <li><a href="#" class="hover:text-blue-200"><i class="fas fa-phone-alt mr-2"></i>Kontak</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container max-w-5xl mx-auto px-4 py-8 flex-grow">
+    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+      <!-- Header Modern -->
+      <header class="bg-gradient-to-r from-blue-500 to-indigo-500 text-white p-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-3xl font-bold tracking-tight">Editor Foto Syahid</h1>
+            <p class="text-blue-100 mt-2">Sempurnakan foto Anda dalam beberapa langkah mudah</p>
+          </div>
+          <i class="fas fa-magic text-4xl opacity-70"></i>
+        </div>
+      </header>
+
+      <!-- Konten Utama -->
+      <main class="p-6 md:p-10">
+        <!-- Area Unggah -->
+        <section class="mb-8">
+          <div class="border-2 border-dashed border-blue-400 rounded-xl p-6 text-center transition-all hover:border-blue-500 group">
+            <input type="file" id="upload" accept="image/*" class="hidden">
+            <label for="upload" class="cursor-pointer">
+              <div class="flex flex-col items-center">
+                <i class="fas fa-cloud-upload-alt text-6xl text-blue-400 group-hover:text-blue-500 mb-4 transition"></i>
+                <p class="text-gray-600 font-medium">Seret dan lepas foto di sini atau <span class="text-blue-500 font-bold">klik untuk memilih</span></p>
+              </div>
+            </label>
+            <p id="message" class="text-red-500 mt-3 hidden"></p>
+          </div>
+        </section>
+
+        <!-- Kanvas -->
+        <section class="flex justify-center mb-8">
+          <canvas id="canvas" class="rounded-lg shadow-lg max-w-full"></canvas>
+        </section>
+
+        <!-- Kontrol Edit -->
+        <section class="grid md:grid-cols-3 gap-6 mb-8">
+          <!-- Kecerahan -->
+          <div class="bg-gray-50 rounded-xl p-4 shadow">
+            <label for="brightness" class="flex items-center mb-3 text-gray-700">
+              <i class="fas fa-sun text-yellow-500 mr-3"></i>Kecerahan
+            </label>
+            <input type="range" id="brightness" min="-100" max="100" value="0" class="w-full">
+            <span id="brightness-value" class="block text-center text-sm text-gray-600 mt-2">0</span>
+          </div>
+
+          <!-- Kontras -->
+          <div class="bg-gray-50 rounded-xl p-4 shadow">
+            <label for="contrast" class="flex items-center mb-3 text-gray-700">
+              <i class="fas fa-adjust text-purple-500 mr-3"></i>Kontras
+            </label>
+            <input type="range" id="contrast" min="-100" max="100" value="0" class="w-full">
+            <span id="contrast-value" class="block text-center text-sm text-gray-600 mt-2">0</span>
+          </div>
+
+          <!-- Saturasi -->
+          <div class="bg-gray-50 rounded-xl p-4 shadow">
+            <label for="saturation" class="flex items-center mb-3 text-gray-700">
+              <i class="fas fa-palette text-green-500 mr-3"></i>Saturasi
+            </label>
+            <input type="range" id="saturation" min="-100" max="100" value="0" class="w-full">
+            <span id="saturation-value" class="block text-center text-sm text-gray-600 mt-2">0</span>
+          </div>
+        </section>
+
+        <!-- Efek Tambahan -->
+        <section class="grid md:grid-cols-2 gap-6 mb-8">
+          <!-- Sepia -->
+          <div class="bg-gray-50 rounded-xl p-4 shadow">
+            <label for="sepia" class="flex items-center mb-3 text-gray-700">
+              <i class="fas fa-tint text-orange-500 mr-3"></i>Sepia
+            </label>
+            <input type="checkbox" id="sepia" class="h-5 w-5 text-orange-500">
+          </div>
+
+          <!-- Grayscale -->
+          <div class="bg-gray-50 rounded-xl p-4 shadow">
+            <label for="grayscale" class="flex items-center mb-3 text-gray-700">
+              <i class="fas fa-tint-slash text-gray-500 mr-3"></i>Grayscale
+            </label>
+            <input type="checkbox" id="grayscale" class="h-5 w-5 text-gray-500">
+          </div>
+        </section>
+
+        <!-- Tombol Aksi -->
+        <section class="flex flex-wrap justify-center gap-4">
+          <button id="reset" class="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition flex items-center">
+            <i class="fas fa-undo mr-2"></i>Atur Ulang
+          </button>
+          <button id="preview-toggle" class="px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition flex items-center">
+            <i class="fas fa-eye mr-2"></i>Pratinjau
+          </button>
+          <button id="download" class="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition flex items-center">
+            <i class="fas fa-download mr-2"></i>Unduh Gambar
+          </button>
+        </section>
+      </main>
+    </div>
+  </div>
+
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-10 mt-8">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-wrap justify-between items-center">
+        <div class="w-full md:w-1/3 text-center md:text-left mb-4 md:mb-0">
+          <h2 class="text-2xl font-bold">Editor Foto Syahid</h2>
+          <p class="text-gray-400 mt-2">Sempurnakan foto Anda dalam beberapa langkah mudah.</p>
+        </div>
+        <div class="w-full md:w-1/3 text-center mb-4 md:mb-0">
+          <div class="flex justify-center space-x-6">
+            <a href="#" class="hover:text-gray-400"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="hover:text-gray-400"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="hover:text-gray-400"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="hover:text-gray-400"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div class="w-full md:w-1/3 text-center md:text-right">
+          <p class="text-sm">&copy; 2024 Editor Foto Syahid. All rights reserved.</p>
+          <p class="text-xs mt-2">Designed with <i class="fas fa-heart text-red-500"></i> by Syahid</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
